@@ -53,3 +53,4 @@ RUN echo '/usr/local/bin/devhub.sh' >> /home/d2x/.bashrc
 
 USER d2x
 CMD ["bash"]
+
