@@ -107,9 +107,6 @@ jobs:
       - name: Get Auth keys All packages
         run: curl -G "${{ env.PKG_API_URL }}keys?auth-token=${{ env.PKG_API_AUTH }}" --data-urlencode "input=$(cat trimmed_deps.txt)" | tee out2.txt | cat out2.txt | cat trimmed_deps.txt
 
-      - name: Set fake env vars
-        run: sed -i.bak 's/=\(.*\)/=c5453a48ab3d0739d82b9038bbaae045/g' out2.txt && cat out2.txt >> $GITHUB_ENV
-
       - name: Install packages Above
         run: cci task run update_dependencies_all_feature --org feature
 
