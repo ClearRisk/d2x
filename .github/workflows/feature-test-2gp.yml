@@ -103,12 +103,11 @@ jobs:
         run: cci flow run ci_feature_2gp -o install_managed__password ${{ env.CR_PKG_KEY }}
 
       - name: Generate trimmed_deps.txt
-        run: echo n | cci task run update_dependencies_all_feature --interactive True --resolution_strategy preproduction --org feature | tee deps2.txt 2> /feature/null
-             sed -n '/\[.*\] Collected dependencies:/,$p' deps2.txt | sed 's/^\[.*\] //' > trimmed_deps.txt
-      - name: Get Auth keys
+        run: echo n | cci task run update_dependencies_all_feature --interactive True --resolution_strategy preproduction --org dev | tee deps.txt 2> /dev/null && sed -n '/\[.*\] Collected dependencies:/,$p' deps.txt | sed 's/^\[.*\] //' > trimmed_deps.txt
+      - name: Get Auth keys All packages
         run: curl -G "${{ env.PKG_API_URL }}keys?auth-token=${{ env.PKG_API_AUTH }}" --data-urlencode "input=$(cat trimmed_deps.txt)" | tee out2.txt
           cat out2.txt
-          cat trimmed_deps.txt.txt
+          cat trimmed_deps.txt
 
       - name: Set fake env vars
         run: sed -i.bak 's/=\(.*\)/=c5453a48ab3d0739d82b9038bbaae045/g' out2.txt && cat out2.txt >> $GITHUB_ENV
