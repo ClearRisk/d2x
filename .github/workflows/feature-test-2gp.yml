@@ -101,8 +101,18 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.github-token }}"
         run: cci flow run ci_feature_2gp -o install_managed__password ${{ env.CR_PKG_KEY }}
-      # - name: Run Robot Tests
-      #   run: cci task run robot --org feature
+
+      - name: Generate trimmed_deps.txt
+        run: echo n | cci task run update_dependencies_all_feature --interactive True --org feature | tee deps.txt
+             sed -n '/\[.*\] Collected dependencies:/,$p' deps.txt | sed 's/^\[.*\] //' > trimmed_deps.txt
+
+      - name: Get Auth keys
+        run: curl -G "${{ env.PKG_API_URL }}keys?auth-token=${{ env.PKG_API_AUTH }}" --data-urlencode "input=$(cat trimmed_deps.txt)" | tee out.txt
+
+      - name: Set fake env vars
+        run: sed -i.bak 's/=\(.*\)/=c5453a48ab3d0739d82b9038bbaae045/g' out.txt && cat out.txt >> $GITHUB_ENV
+
+          
       - name: Delete Scratch Org
         if: ${{ always() }}
         run: |

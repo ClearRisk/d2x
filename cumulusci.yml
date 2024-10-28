@@ -1,0 +1,38 @@
+minimum_cumulusci_version: '3.88.0'
+project:
+    name: D2X
+    package:
+        name: D2X
+        api_version: '60.0'
+    git:
+        default_branch: 'main'
+    source_format: sfdx
+
+tasks:
+    update_dependencies_all_feature:
+        class_path: cumulusci.tasks.salesforce.UpdateDependencies
+        options:
+            dependencies:
+             - github: 'https://github.com/ClearRisk/Files'
+               password_env_name: FILES_MANAGED_KEY
+             - github: 'https://github.com/ClearRisk/Model'
+               password_env_name: MODEL_KEY
+             - github: 'https://github.com/ClearRisk/Billable-Hours'
+               password_env_name: INVOICING_KEY
+             - github: 'https://github.com/ClearRisk/Claims'
+               password_env_name: CLAIMS_KEY
+             - github: 'https://github.com/ClearRisk/Property'
+               password_env_name: PROPERTY_KEY
+             - github: 'https://github.com/ClearRisk/Claims-Property'
+               password_env_name: CLAIMSPROPERTY_KEY
+             - github: 'https://github.com/ClearRisk/Contracts-Certificates'
+               password_env_name: CONTRACTSANDCERTIFICATES_KEY
+             - github: 'https://github.com/ClearRisk/Claims-Contracts-Certs'
+               password_env_name: CLAIMSCONTRACTSCERTIFICATES_KEY
+             - github: https://github.com/ClearRisk/Insurance-Pool
+               password_env_name: POOL_KEY
+            PREFER2GPFROMRELEASEBRANCH: true
+            PACKAGESONLY: true
+            resolution_strategy: preproduction
+
+
