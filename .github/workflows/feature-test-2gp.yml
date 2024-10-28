@@ -112,7 +112,9 @@ jobs:
       - name: Set fake env vars
         run: sed -i.bak 's/=\(.*\)/=c5453a48ab3d0739d82b9038bbaae045/g' out.txt && cat out.txt >> $GITHUB_ENV
 
-          
+      - name: Install packages Above
+        run: cci task run update_dependencies_all_feature --org feature
+
       - name: Delete Scratch Org
         if: ${{ always() }}
         run: |
