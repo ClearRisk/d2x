@@ -103,8 +103,8 @@ jobs:
         run: cci flow run ci_feature_2gp -o install_managed__password ${{ env.CR_PKG_KEY }}
 
       - name: Generate trimmed_deps.txt
-        run: echo n | cci task run update_dependencies_all_feature --interactive True --org feature | tee deps.txt
-             sed -n '/\[.*\] Collected dependencies:/,$p' deps.txt | sed 's/^\[.*\] //' > trimmed_deps.txt
+        run: echo n | cci task run update_dependencies_all_feature --interactive True --org feature | tee deps2.txt
+             sed -n '/\[.*\] Collected dependencies:/,$p' deps2.txt | sed 's/^\[.*\] //' > trimmed_deps.txt
 
       - name: Get Auth keys
         run: curl -G "${{ env.PKG_API_URL }}keys?auth-token=${{ env.PKG_API_AUTH }}" --data-urlencode "input=$(cat trimmed_deps.txt)" | tee out.txt
