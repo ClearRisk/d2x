@@ -109,13 +109,7 @@ jobs:
         run: cat trimmed_deps.txt
 
       - name: Get Auth keys All packages
-        run: curl -G "${{ env.PKG_API_URL }}keys?auth-token=${{ env.PKG_API_AUTH }}" --data-urlencode "input=$(cat trimmed_deps.txt.txt)" | tee $GITHUB_ENV
-
-      - name: Display contents of out2.txt
-        run: cat out2.txt
-
-      - name: Set new env vars
-        run: cat out2.txt >> $GITHUB_ENV
+        run: curl -G "${{ env.PKG_API_URL }}keys?auth-token=${{ env.PKG_API_AUTH }}" --data-urlencode "input=$(cat trimmed_deps.txt)" | tee $GITHUB_ENV
 
       - name: Verify Environment Variables
         run: |
