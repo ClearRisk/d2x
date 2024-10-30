@@ -100,25 +100,6 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.github-token }}"
         run: cci flow run ci_feature_2gp -o install_managed__password ${{ env.CR_PKG_KEY }}
-
-      - name: Generate trimmed_deps.txt
-        run: yes n | cci task run update_dependencies_all_feature --interactive True --resolution_strategy preproduction --org feature | tee deps2.txt 2> /dev/null 
-      - name: Trim deps2.txt file
-        run: sed -n '/Collected dependencies:/,$p' deps2.txt | sed '/Continue to install dependencies?/q' > trimmed_deps.txt
-      - name: Display contents of trimmed_deps.txt
-        run: cat trimmed_deps.txt
-
-      - name: Get Auth keys All packages
-        run: curl -G "${{ env.PKG_API_URL }}keys?auth-token=${{ env.PKG_API_AUTH }}" --data-urlencode "input=$(cat trimmed_deps.txt)" | tee $GITHUB_ENV
-
-      - name: Verify Environment Variables
-        run: |
-          echo "FILES_MANAGED_KEY is $FILES_MANAGED_KEY"
-          echo "PROPERTY_KEY is $PROPERTY_KEY"
-
-      - name: Install packages Above
-        run: cci task run update_dependencies_all_feature --org feature
-
       - name: Delete Scratch Org
         if: ${{ always() }}
         run: |
