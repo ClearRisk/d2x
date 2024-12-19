@@ -14,7 +14,10 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | b
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
     nvm install 20.17.0 && \
     nvm use 20.17.0 && \
-    nvm alias default 20.17.0
+    nvm alias default 20.17.0 && \
+    ln -s $NVM_DIR/versions/node/$(nvm version)/bin/npm /usr/local/bin/npm && \
+    ln -s $NVM_DIR/versions/node/$(nvm version)/bin/node /usr/local/bin/node
+
 RUN npm install --global npm jq commander
 RUN npm install --global @salesforce/cli
 RUN npm install --global prettier prettier-plugin-apex
