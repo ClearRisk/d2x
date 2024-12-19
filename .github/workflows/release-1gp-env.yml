@@ -23,7 +23,7 @@ on:
 jobs:
     beta-test:
         name: "Production Release"
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         environment: ${{ inputs.env-name }}
         container:
             image: ghcr.io/muselab-d2x/d2x:latest

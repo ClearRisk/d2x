@@ -17,7 +17,7 @@ on:
 jobs:
   analyze:
     name: "Static Analysis Run"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
       image: ghcr.io/clearrisk/d2x:latest
       options: --user root

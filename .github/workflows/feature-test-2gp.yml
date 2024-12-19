@@ -30,7 +30,7 @@ on:
 jobs:
   feature-test:
     name: "2GP Feature Test"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
       image: ghcr.io/clearrisk/d2x:latest
       options: --user root
