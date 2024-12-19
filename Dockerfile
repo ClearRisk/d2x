@@ -9,11 +9,12 @@ ENV CHROMEDRIVER_DIR /chromedriver
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y gnupg wget curl git
-RUN \
-  echo "deb https://deb.nodesource.com/node_20.x bullseye main" > /etc/apt/sources.list.d/nodesource.list && \
-  wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-  apt-get update
-RUN apt-get install -y nodejs
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash && \
+    export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
+    nvm install 20.17.0 && \
+    nvm use 20.17.0 && \
+    nvm alias default 20.17.0
 RUN npm install --global npm jq commander
 RUN npm install --global @salesforce/cli
 RUN npm install --global prettier prettier-plugin-apex
